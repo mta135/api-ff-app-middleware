@@ -15,11 +15,10 @@ namespace FFAppMiddleware.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult GenerateToken()
+        public IActionResult GetStaticToken()
         {
-            var token = _jwtAuthManager.GenerateTokens();
-
-            return Ok(token);
+            string token = _jwtAuthManager.GenerateStaticJwtToken();
+            return Ok(new { token });
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FFAppMiddleware.API.Core.Security.Authetication
 {
@@ -17,31 +15,29 @@ namespace FFAppMiddleware.API.Core.Security.Authetication
             _config = options.Value;
         }
 
-        public JwtAuthResult GenerateTokens()
+        public string GenerateStaticJwtToken()
         {
-            JwtSecurityTokenHandler tokenHandler = new();
-            byte[] key = Encoding.UTF8.GetBytes(_config.Secret);
+            DateTime issuedAt = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
-            List<Claim> claims = new()
+            byte[] key = Encoding.UTF8.GetBytes(_config.Secret);
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+            JwtHeader header = new JwtHeader(credentials);
+
+            List<Claim> claims = new List<Claim>
             {
                 new Claim("Company", "DitaEstFarm"),
                 new Claim("HeadOfDepartment", "Denis"),
                 new Claim("DotNet Developer", "Eugen"),
-                new Claim("DotNet Developer", "Mihai"),
+                new Claim("DotNet Developer", "Mihai")
             };
 
-            SymmetricSecurityKey securityKey = new(key);
-            SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256Signature);
+            JwtPayload payload = new JwtPayload(issuer: _config.Issuer, audience: _config.Audience,
+                claims: claims, notBefore: issuedAt, expires: null, issuedAt: issuedAt);
 
-            JwtSecurityToken token = new(issuer: _config.Issuer, audience: _config.Audience,
-                claims: claims, notBefore: DateTime.UtcNow, expires: null, signingCredentials: credentials);
+            JwtSecurityToken token = new JwtSecurityToken(header, payload);
 
-            string tokenString = tokenHandler.WriteToken(token);
-
-            return new JwtAuthResult
-            {
-                AccessToken = tokenString
-            };
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
