@@ -28,8 +28,7 @@ namespace FFAppMiddleware.API.Core.Security.Authetication
             {
                 new Claim("Company", "DitaEstFarm"),
                 new Claim("HeadOfDepartment", "Denis"),
-                new Claim("DotNet Developer", "Eugen"),
-                new Claim("DotNet Developer", "Mihai")
+                new Claim("DotNet Developers", "Eugen/Mihai"),
             };
 
             JwtPayload payload = new JwtPayload(issuer: _config.Issuer, audience: _config.Audience,
