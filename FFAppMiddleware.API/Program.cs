@@ -1,15 +1,11 @@
-﻿
-
-
-
-using FFAppMiddleware.API.Core.Security.Authetication;
+﻿using FFAppMiddleware.API.Core.Security.Authetication;
+using FFAppMiddleware.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
 
 #region JWT Token Configuration
 
@@ -19,7 +15,6 @@ builder.Services.AddSingleton<JwtAuthenticationManager>();
 
 #endregion
 
-// Add services to the container.
 
 builder.Services.AddControllers();
 

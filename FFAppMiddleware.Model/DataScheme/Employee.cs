@@ -93,5 +93,5 @@ public partial class Employee
 
     public virtual ICollection<PurchaseOrderHeader> PurchaseOrderHeaders { get; set; } = new List<PurchaseOrderHeader>();
 
-    public virtual SalesPerson? SalesPerson { get; set; }
+    public virtual SalesPerson SalesPerson { get; set; }
 }
