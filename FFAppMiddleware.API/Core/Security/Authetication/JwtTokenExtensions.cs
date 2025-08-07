@@ -28,7 +28,7 @@ namespace FFAppMiddleware.API.Core.Security.Authetication
                     ValidateAudience = true,
                     ValidAudience = jwtConfig.Audience,
 
-                    ValidateLifetime = true, // dacă tokenul nu expiră, setează pe false
+                    ValidateLifetime = false, // dacă tokenul nu expiră, setează pe false
                     ClockSkew = TimeSpan.Zero,
                 };
             });
