@@ -30,7 +30,7 @@ builder.Services.AddSwaggerGen(c =>
         Description = "FFAppMiddleware Project. ASP.NET Web API",
         Contact = new OpenApiContact
         {
-            Name = ".Net Developers: Denis Polomorenco, Eugen Cojocaru, Mihai Tamazlîcaru",
+            Name = ".Net Developers: Denis Polomarenco, Eugen Cojocaru, Mihai Tamazlîcaru",
             Email = string.Empty,
             Url = new Uri("https://twitter.com/spboyer"),
         },
