@@ -4,11 +4,11 @@ using System.Text;
 
 namespace FFAppMiddleware.API.Core.Security.Authetication
 {
-    public static class JwtExtensions
+    public static class JwtTokenExtensions
     {
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            JwtTokenConfig jwtConfig = config.GetSection("JwtTokenConfig").Get<JwtTokenConfig>() ?? throw new Exception("JwtTokenConfig section missing or invalid");
+            JwtTokenConfiguration jwtConfig = config.GetSection("JwtTokenConfig").Get<JwtTokenConfiguration>() ?? throw new Exception("JwtTokenConfig section missing or invalid");
 
             services.AddAuthentication(options =>
             {

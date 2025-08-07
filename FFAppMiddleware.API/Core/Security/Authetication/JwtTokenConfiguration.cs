@@ -1,6 +1,6 @@
 ﻿namespace FFAppMiddleware.API.Core.Security.Authetication
 {
-    public class JwtTokenConfig
+    public class JwtTokenConfiguration
     {
         public string Secret { get; set; }
         public string Issuer { get; set; } 

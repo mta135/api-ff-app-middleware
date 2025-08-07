@@ -11,9 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region JWT Token Configuration
 
-builder.Services.Configure<JwtTokenConfig>(builder.Configuration.GetSection("JwtTokenConfig"));
+builder.Services.Configure<JwtTokenConfiguration>(builder.Configuration.GetSection("JwtTokenConfig"));
 builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddSingleton<JwtAuthManager>();
+builder.Services.AddSingleton<JwtAuthenticationManager>();
 builder.Services.AddAuthorization();
 
 #endregion

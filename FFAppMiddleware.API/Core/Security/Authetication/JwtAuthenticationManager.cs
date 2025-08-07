@@ -6,11 +6,11 @@ using System.Text;
 
 namespace FFAppMiddleware.API.Core.Security.Authetication
 {
-    public class JwtAuthManager
+    public class JwtAuthenticationManager
     {
-        private readonly JwtTokenConfig _config;
+        private readonly JwtTokenConfiguration _config;
 
-        public JwtAuthManager(IOptions<JwtTokenConfig> options)
+        public JwtAuthenticationManager(IOptions<JwtTokenConfiguration> options)
         {
             _config = options.Value;
         }
