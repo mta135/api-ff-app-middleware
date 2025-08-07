@@ -6,6 +6,7 @@ using FFAppMiddleware.API.Core.Security.Authetication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,20 +25,58 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+#region Swagger/OpenAPI Configuration
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        In = ParameterLocation.Header,
-        Description = "Please enter JWT token with 'Bearer ' prefix.",
+        Version = "v1",
+        Title = "Dita EstFarm",
+        Description = "FFAppMiddleware Project. ASP.NET Web API",
+        Contact = new OpenApiContact
+        {
+            Name = ".Net Developers: Denis Polomorenco, Eugen Cojocaru, Mihai Tamazlîcaru",
+            Email = string.Empty,
+            Url = new Uri("https://twitter.com/spboyer"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Dita EstFarm Licence",
+            Url = new Uri("https://example.com/license"),
+        },
+    });
+    c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme. <br /><br />" +
+                      @"Enter 'Bearer' [space] and then your token in the text input below. <br />" +
+                      @"DitaEstFarm Authorization - Root. <br />",
         Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement(){
+        {         
+            new OpenApiSecurityScheme        
+            {  
+                Reference = new OpenApiReference      
+                {
+                    Type = ReferenceType.SecurityScheme,   
+                    Id =  JwtBearerDefaults.AuthenticationScheme     
+                }, 
+                Scheme = "oauth2",
+                Name =  JwtBearerDefaults.AuthenticationScheme,
+                In = ParameterLocation.Header,        
+            },      
+            new List<string>()            
+        }             
     });
 });
+
+#endregion
 
 var app = builder.Build();
 

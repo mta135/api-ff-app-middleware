@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
+
     [Authorize]
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

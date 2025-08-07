@@ -15,7 +15,7 @@ namespace FFAppMiddleware.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetStaticJwtToken()
+        public IActionResult GetStaticJwtAuthorizationToken()
         {
             string token = _jwtAuthManager.GenerateStaticJwtToken();
             return Ok(new { token });
