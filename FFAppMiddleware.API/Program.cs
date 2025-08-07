@@ -11,10 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 #region JWT Configuration
 
-string jwtKey = builder.Configuration["JwtTokenConfig:Key"] ?? throw new Exception("JwtTokenConfig:Key missing");
-string jwtIssuer = builder.Configuration["JwtTokenConfig:Issuer"] ?? throw new Exception("JwtTokenConfig:Issuer missing");
-
-string jwtAudience = builder.Configuration["JwtTokenConfig:Audience"] ?? throw new Exception("JwtTokenConfig:Audience missing");
+string jwtKey = builder.Configuration["JwtTokenConfig:secret"] ?? throw new Exception("JwtTokenConfig:secret");
+string jwtIssuer = builder.Configuration["JwtTokenConfig:issuer"] ?? throw new Exception("JwtTokenConfig:issuer");
+string jwtAudience = builder.Configuration["JwtTokenConfig:audience"] ?? throw new Exception("JwtTokenConfig:audience");
 
 builder.Services.AddAuthentication(options =>
 {
