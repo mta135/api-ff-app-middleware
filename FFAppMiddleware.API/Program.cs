@@ -1,31 +1,66 @@
-internal class Program
+﻿
+
+
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+
+#region JWT Configuration
+
+string jwtKey = builder.Configuration["JwtTokenConfig:Key"] ?? throw new Exception("JwtTokenConfig:Key missing");
+string jwtIssuer = builder.Configuration["JwtTokenConfig:Issuer"] ?? throw new Exception("JwtTokenConfig:Issuer missing");
+
+string jwtAudience = builder.Configuration["JwtTokenConfig:Audience"] ?? throw new Exception("JwtTokenConfig:Audience missing");
+
+builder.Services.AddAuthentication(options =>
 {
-    private static void Main(string[] args)
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
     {
-        var builder = WebApplication.CreateBuilder(args);
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
 
-        // Add services to the container.
+        ValidateIssuer = true,
+        ValidIssuer = jwtIssuer,
 
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        ValidateAudience = true,
+        ValidAudience = jwtAudience,
 
-        var app = builder.Build();
+        ValidateLifetime = true,
+    };
+});
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+#endregion
 
-        app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+// Add services to the container.
 
-        app.MapControllers();
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        app.Run();
-    }
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
