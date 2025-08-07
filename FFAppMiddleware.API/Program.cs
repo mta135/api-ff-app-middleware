@@ -2,40 +2,19 @@
 
 
 
+using FFAppMiddleware.API.Core.Security.Authetication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region JWT Token Configuration
 
-#region JWT Configuration
-
-string jwtKey = builder.Configuration["JwtTokenConfig:secret"] ?? throw new Exception("JwtTokenConfig:secret");
-string jwtIssuer = builder.Configuration["JwtTokenConfig:issuer"] ?? throw new Exception("JwtTokenConfig:issuer");
-string jwtAudience = builder.Configuration["JwtTokenConfig:audience"] ?? throw new Exception("JwtTokenConfig:audience");
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-
-        ValidateIssuer = true,
-        ValidIssuer = jwtIssuer,
-
-        ValidateAudience = true,
-        ValidAudience = jwtAudience,
-
-        ValidateLifetime = true,
-    };
-});
+builder.Services.Configure<JwtTokenConfig>(builder.Configuration.GetSection("JwtTokenConfig"));
+builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddSingleton<JwtAuthManager>();
+builder.Services.AddAuthorization();
 
 #endregion
 
@@ -43,6 +22,7 @@ builder.Services.AddAuthentication(options =>
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -58,6 +38,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
