@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36401.2 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.API", "FFAppMiddleware.API\FFAppMiddleware.API.csproj", "{F945476F-7401-4CA3-AA7A-043B1A21CCD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.Model", "FFAppMiddleware.Model\FFAppMiddleware.Model.csproj", "{A50C34AD-EE4E-4329-AD70-984E896E2F99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F945476F-7401-4CA3-AA7A-043B1A21CCD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F945476F-7401-4CA3-AA7A-043B1A21CCD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F945476F-7401-4CA3-AA7A-043B1A21CCD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50C34AD-EE4E-4329-AD70-984E896E2F99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50C34AD-EE4E-4329-AD70-984E896E2F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50C34AD-EE4E-4329-AD70-984E896E2F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50C34AD-EE4E-4329-AD70-984E896E2F99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
