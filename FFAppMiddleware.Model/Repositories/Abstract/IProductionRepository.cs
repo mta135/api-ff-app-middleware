@@ -1,4 +1,5 @@
 ﻿using FFAppMiddleware.Model.DataScheme;
+using FFAppMiddleware.Model.Models.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace FFAppMiddleware.Model.Repositories.Abstract
 {
     public interface IProductionRepository
     {
-        List<ProductDescription> GetProductDescriptions();
+        List<ProductDescriptionApiModel> GetProductDescriptions();
     }
 }

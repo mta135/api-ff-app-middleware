@@ -1,4 +1,5 @@
 ﻿using FFAppMiddleware.Model.DataScheme;
+using FFAppMiddleware.Model.Models.Products;
 using FFAppMiddleware.Model.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,19 @@ namespace FFAppMiddleware.Model.Repositories.Real
             _db = new AdventureWorksDbContext();
         }
 
-        public List<ProductDescription> GetProductDescriptions()
+        public List<ProductDescriptionApiModel> GetProductDescriptions()
         {
-            List<ProductDescription> productDescriptions = _db.ProductDescriptions.OrderBy(pd => pd.Description).ToList();
+            List<ProductDescriptionApiModel> productDescriptions = _db.ProductDescriptions.OrderBy(pd => pd.Description)
+                .Select(x => new ProductDescriptionApiModel
+                {
+                    ProductDescriptionId = x.ProductDescriptionId,
+                    Description = x.Description,
+
+                    Rowguid = x.Rowguid,
+                    ModifiedDate = x.ModifiedDate
+
+                }).ToList();
+
             return productDescriptions;
         }
     }
