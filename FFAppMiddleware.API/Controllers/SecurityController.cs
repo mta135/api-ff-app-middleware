@@ -7,17 +7,17 @@ namespace FFAppMiddleware.API.Controllers
     [ApiController]
     public class SecurityController : ControllerBase
     {
-        private readonly JwtAuthenticationManager _jwtAuthManager;
+        private readonly JwtAuthenticationManager _jwtAuthenticationManager;
 
-        public SecurityController(JwtAuthenticationManager jwtAuthManager)
+        public SecurityController(JwtAuthenticationManager jwtAuthenticationManager)
         {
-            _jwtAuthManager = jwtAuthManager;
+            _jwtAuthenticationManager = jwtAuthenticationManager;
         }
 
         [HttpPost]
-        public IActionResult GetStaticJwtAuthorizationToken()
+        public IActionResult GetStaticJwtAuthenticationToken()
         {
-            string token = _jwtAuthManager.GenerateStaticJwtToken();
+            string token = _jwtAuthenticationManager.GenerateStaticJwtAuthenticationToken();
             return Ok(new { token });
         }
     }

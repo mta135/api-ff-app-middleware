@@ -8,14 +8,14 @@ namespace FFAppMiddleware.API.Core.Security.Authetication
 {
     public class JwtAuthenticationManager
     {
-        private readonly JwtTokenConfiguration _config;
+        private readonly JwtAuthenticationTokenConfig _config;
 
-        public JwtAuthenticationManager(IOptions<JwtTokenConfiguration> options)
+        public JwtAuthenticationManager(IOptions<JwtAuthenticationTokenConfig> options)
         {
             _config = options.Value;
         }
 
-        public string GenerateStaticJwtToken()
+        public string GenerateStaticJwtAuthenticationToken()
         {
             DateTime issuedAt = new DateTime(2023, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
