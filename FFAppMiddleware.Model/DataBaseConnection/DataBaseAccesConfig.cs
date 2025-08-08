@@ -14,6 +14,13 @@ namespace FFAppMiddleware.Model.DataBaseConnection
     {
         private SqlConnection connection;
 
+        private readonly Lazy<Task<SqlConnection>> _lazyAsyncConnection;
+
+        public DataBaseAccesConfig()
+        {
+            _lazyAsyncConnection = new Lazy<Task<SqlConnection>>(InitializeConnectionAsync);
+        }
+
         public SqlConnection Connection
         {
             get
@@ -21,6 +28,21 @@ namespace FFAppMiddleware.Model.DataBaseConnection
                 SetConnection();
                 return this.connection;
             }
+        }
+
+        public Task<SqlConnection> ConnectionAsync
+        {
+            get
+            {
+                return _lazyAsyncConnection.Value;
+            }
+        }
+
+        private async Task<SqlConnection> InitializeConnectionAsync()
+        {
+            SqlConnection connection = new SqlConnection(ConnectionStringSettings.ConnectionString);
+            await connection.OpenAsync();
+            return connection;
         }
 
         private void SetConnection()
@@ -31,10 +53,26 @@ namespace FFAppMiddleware.Model.DataBaseConnection
 
         public void Dispose()
         {
-            if (connection.State == ConnectionState.Open)
+            if (connection?.State == ConnectionState.Open)
                 connection.Close();
+            connection?.Dispose();
         }
 
+        public async ValueTask DisposeAsync()
+        {
+            if (_lazyAsyncConnection.IsValueCreated)
+            {
+                SqlConnection connection = await _lazyAsyncConnection.Value;
+
+                if (connection?.State == ConnectionState.Open)
+                    await connection.CloseAsync();
+
+                if (connection != null)
+                    await connection.DisposeAsync();
+            }
+
+            connection?.Dispose();
+        }
     }
 }
 

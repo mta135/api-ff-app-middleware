@@ -3,6 +3,7 @@ using FFAppMiddleware.Model.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FFAppMiddleware.API.Controllers
 {
@@ -21,13 +22,13 @@ namespace FFAppMiddleware.API.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserApiModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisteredUsersApiModel))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public IActionResult RetrieveRegisteredUsers()
+        public async Task<IActionResult> RetrieveRegisteredUsers()
         {
             try
             {
-                List<UserApiModel> users = _userManagementRepository.RetrieveRegisteredUsers();
+                List<RegisteredUsersApiModel> users = await _userManagementRepository.RetrieveRegisteredUsers();
                 return Ok(users);
             }
             catch (Exception ex)

@@ -12,25 +12,26 @@ namespace FFAppMiddleware.Model.Repositories.Real
 {
     public class UserManagementRepository : IUserManagementRepository
     {
-        private DataBaseAccesConfig _db;
+        private readonly DataBaseAccesConfig _db;
 
         public UserManagementRepository()
         {
             _db = new DataBaseAccesConfig();
         }
 
-        public List<UserApiModel> RetrieveRegisteredUsers()
+        public async Task<List<RegisteredUsersApiModel>> RetrieveRegisteredUsers()
         {
             try
             {
-                List<UserApiModel> users = new();
-                SqlCommand command = new SqlCommand("SELECT * FROM users u", _db.Connection);
+                List<RegisteredUsersApiModel> users = new();
 
-                using (SqlDataReader reader = command.ExecuteReader())
+                SqlCommand command = new("SELECT * FROM users u", await _db.ConnectionAsync);
+
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
-                        UserApiModel user = new UserApiModel
+                        RegisteredUsersApiModel user = new RegisteredUsersApiModel
                         {
                             Id = Convert.ToInt64(reader["user_id"]),
                             UserLogin = Convert.ToString(reader["user_login"]),
@@ -54,7 +55,7 @@ namespace FFAppMiddleware.Model.Repositories.Real
             }
             finally
             {
-                _db.Dispose();
+                await _db.DisposeAsync(); 
             }
         }
     }

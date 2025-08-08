@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FFAppMiddleware.Model.Models.UserManagement
 {
-    public class UserApiModel
+    public class RegisteredUsersApiModel
     {
         public long Id { get; set; }
 

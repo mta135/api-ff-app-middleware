@@ -10,6 +10,6 @@ namespace FFAppMiddleware.Model.Repositories.Abstract
     public interface IUserManagementRepository
     {
 
-        List<UserApiModel> RetrieveRegisteredUsers();
+        Task<List<RegisteredUsersApiModel>> RetrieveRegisteredUsers();
     }
 }
