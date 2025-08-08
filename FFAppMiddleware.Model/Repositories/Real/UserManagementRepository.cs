@@ -35,8 +35,7 @@ namespace FFAppMiddleware.Model.Repositories.Real
                             Id = Convert.ToInt64(reader["user_id"]),
                             UserLogin = Convert.ToString(reader["user_login"]),
                             UserPassword = Convert.ToString(reader["user_password"]),
-      
-                            Idnp = Convert.ToString(reader["user_idnp"]),
+     
                             BirthDate = reader["birthday"] == DBNull.Value ? null : (DateTime?)reader["birthday"]
                         };
                         users.Add(user);
@@ -47,12 +46,10 @@ namespace FFAppMiddleware.Model.Repositories.Real
             }
             catch (SqlException sqlEx)
             {
-                // Log the SQL exception (not implemented here)
                 throw new Exception($"SQL Error: {sqlEx.Message}");
             }
             catch (Exception ex)
             {
-                // Log the general exception (not implemented here)
                 throw new Exception($"Error retrieving users: {ex.Message}");
             }
             finally
