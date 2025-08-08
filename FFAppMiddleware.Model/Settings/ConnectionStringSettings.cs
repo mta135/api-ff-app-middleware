@@ -19,7 +19,7 @@ namespace FFAppMiddleware.Model.Settings
 
         public static void InitializeConnectionString(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("ConnectionStrings:Main");
+            _connectionString = configuration.GetConnectionString("ConnectionStrings:SpherusPharma");
         }
     }
 }
