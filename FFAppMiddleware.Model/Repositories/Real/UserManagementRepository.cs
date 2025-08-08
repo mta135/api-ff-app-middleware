@@ -32,11 +32,12 @@ namespace FFAppMiddleware.Model.Repositories.Real
                     {
                         UserApiModel user = new UserApiModel
                         {
-                            Id = reader.GetInt32(0),
-                            UserLogin = reader.GetString(1),
-                            UserPassword = reader.GetString(2),
-                            Idnp = reader.GetString(3),
-                            BirthDate = reader.IsDBNull(4) ? null : reader.GetDateTime(4)
+                            Id = Convert.ToInt64(reader["user_id"]),
+                            UserLogin = Convert.ToString(reader["user_login"]),
+                            UserPassword = Convert.ToString(reader["user_password"]),
+      
+                            Idnp = Convert.ToString(reader["user_idnp"]),
+                            BirthDate = reader["birthday"] == DBNull.Value ? null : (DateTime?)reader["birthday"]
                         };
                         users.Add(user);
                     }
