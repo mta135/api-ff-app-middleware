@@ -21,7 +21,7 @@ public partial class Address
     /// <summary>
     /// Second street address line.
     /// </summary>
-    public string? AddressLine2 { get; set; }
+    public string AddressLine2 { get; set; }
 
     /// <summary>
     /// Name of the city.

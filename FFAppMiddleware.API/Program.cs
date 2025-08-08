@@ -1,4 +1,6 @@
 ﻿using FFAppMiddleware.API.Core.Security.Authetication;
+using FFAppMiddleware.Model.Repositories.Abstract;
+using FFAppMiddleware.Model.Repositories.Real;
 using FFAppMiddleware.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
@@ -6,6 +8,10 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
+
+
+builder.Services.AddScoped<IUserManagementRepository, UserManagementRepository>();
+
 
 #region JWT Token Configuration
 

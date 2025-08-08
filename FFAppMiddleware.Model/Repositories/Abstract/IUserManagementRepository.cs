@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FFAppMiddleware.Model.Models.UserManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace FFAppMiddleware.Model.Repositories.Abstract
 {
     public interface IUserManagementRepository
     {
+
+        List<UserApiModel> RetrieveRegisteredUsers();
     }
 }
