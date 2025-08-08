@@ -5,7 +5,7 @@ namespace FFAppMiddleware.API.DependencyInjection
 {
     public static class DependencyInjectionConfig
     {
-        public static IServiceCollection AddServicesConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IUserManagementRepository, UserManagementRepository>();
 
