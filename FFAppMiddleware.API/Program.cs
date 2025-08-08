@@ -9,9 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
 
-
 builder.Services.AddScoped<IUserManagementRepository, UserManagementRepository>();
-
 
 #region JWT Token Configuration
 
@@ -20,7 +18,6 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSingleton<JwtAuthenticationManager>();
 
 #endregion
-
 
 builder.Services.AddControllers();
 
