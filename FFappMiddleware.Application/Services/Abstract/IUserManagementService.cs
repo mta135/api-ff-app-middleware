@@ -1,6 +1,6 @@
 ﻿using FFAppMiddleware.Model.Models.UserManagement;
 
-namespace FFappMiddleware.ApplicationServices.Services.Real
+namespace FFappMiddleware.Application.Services.Real
 {
     public interface IUserManagementService
     {

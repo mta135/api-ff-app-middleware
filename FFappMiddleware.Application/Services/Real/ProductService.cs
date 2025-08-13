@@ -1,8 +1,8 @@
-﻿using FFappMiddleware.ApplicationServices.Services.Abstract;
+﻿using FFappMiddleware.Application.Services.Abstract;
 using FFappMiddleware.DataBase.Repositories.Abstract;
 using FFAppMiddleware.Model.Models.Products;
 
-namespace FFappMiddleware.ApplicationServices.Services.Real
+namespace FFappMiddleware.Application.Services.Real
 {
     public class ProductService : IProductService
     {

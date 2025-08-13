@@ -1,6 +1,6 @@
 ﻿using FFAppMiddleware.Model.Models.Products;
 
-namespace FFappMiddleware.ApplicationServices.Services.Abstract
+namespace FFappMiddleware.Application.Services.Abstract
 {
     public interface IProductService
     {

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FFappMiddleware.Application\FFappMiddleware.ApplicationServices.csproj" />
+    <ProjectReference Include="..\FFappMiddleware.Application\FFappMiddleware.Application.csproj" />
   </ItemGroup>
 
 </Project>

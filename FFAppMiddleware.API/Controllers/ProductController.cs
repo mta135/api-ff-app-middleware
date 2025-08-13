@@ -1,4 +1,4 @@
-﻿using FFappMiddleware.ApplicationServices.Services.Abstract;
+﻿using FFappMiddleware.Application.Services.Abstract;
 using FFAppMiddleware.Model.Models.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
