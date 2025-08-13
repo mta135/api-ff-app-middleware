@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="DataScheme\" />
+    <Folder Include="Models\Products\" />
   </ItemGroup>
 
   <ItemGroup>
