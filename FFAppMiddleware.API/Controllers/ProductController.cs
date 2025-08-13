@@ -1,9 +1,11 @@
 ﻿using FFappMiddleware.ApplicationServices.Services.Abstract;
 using FFAppMiddleware.Model.Models.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
