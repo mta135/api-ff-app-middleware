@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.Model", "FF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.Application", "FFappMiddleware.Application\FFappMiddleware.Application.csproj", "{40CF6654-ECCD-4DEB-BF6C-5B85DB516775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.DataAcces", "FFappMiddleware.DataAcces\FFappMiddleware.DataAcces.csproj", "{F8519852-92BA-4573-9194-BD0C63DB2F84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.DataBase", "FFappMiddleware.DataAcces\FFappMiddleware.DataBase.csproj", "{F8519852-92BA-4573-9194-BD0C63DB2F84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
