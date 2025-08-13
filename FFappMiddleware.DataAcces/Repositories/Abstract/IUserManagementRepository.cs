@@ -1,6 +1,6 @@
 ﻿using FFAppMiddleware.Model.Models.UserManagement;
 
-namespace FFAppMiddleware.Model.Repositories.Abstract
+namespace FFappMiddleware.DataBase.Repositories.Abstract
 {
     public interface IUserManagementRepository
     {

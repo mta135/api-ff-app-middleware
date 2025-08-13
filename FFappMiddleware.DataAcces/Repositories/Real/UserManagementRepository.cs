@@ -1,9 +1,9 @@
 ﻿using FFappMiddleware.DataAcces.DataBaseConnection;
+using FFappMiddleware.DataBase.Repositories.Abstract;
 using FFAppMiddleware.Model.Models.UserManagement;
-using FFAppMiddleware.Model.Repositories.Abstract;
 using Microsoft.Data.SqlClient;
 
-namespace FFAppMiddleware.Model.Repositories.Real
+namespace FFappMiddleware.DataBase.Repositories.Real
 {
     public class UserManagementRepository : IUserManagementRepository
     {

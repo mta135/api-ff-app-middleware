@@ -1,11 +1,6 @@
 ﻿using FFAppMiddleware.Model.Models.UserManagement;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FFappMiddleware.Application.Services.Abstract
+namespace FFappMiddleware.ApplicationServices.Services.Real
 {
     public interface IUserManagementService
     {

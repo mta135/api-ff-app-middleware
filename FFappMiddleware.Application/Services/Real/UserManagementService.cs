@@ -1,8 +1,7 @@
-﻿using FFappMiddleware.Application.Services.Abstract;
+﻿using FFappMiddleware.DataBase.Repositories.Abstract;
 using FFAppMiddleware.Model.Models.UserManagement;
-using FFAppMiddleware.Model.Repositories.Abstract;
 
-namespace FFappMiddleware.Application.Services.Real
+namespace FFappMiddleware.ApplicationServices.Services.Real
 {
     public class UserManagementService : IUserManagementService
     {

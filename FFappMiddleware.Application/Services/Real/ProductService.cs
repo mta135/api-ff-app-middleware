@@ -1,11 +1,6 @@
 ﻿using FFappMiddleware.ApplicationServices.Services.Abstract;
 using FFappMiddleware.DataBase.Repositories.Abstract;
 using FFAppMiddleware.Model.Models.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FFappMiddleware.ApplicationServices.Services.Real
 {
