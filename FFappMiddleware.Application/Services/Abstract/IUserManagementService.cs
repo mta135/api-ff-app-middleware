@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FFAppMiddleware.Model.Repositories.Abstract
+namespace FFappMiddleware.Application.Services.Abstract
 {
-    public interface IUserManagementRepository
+    public interface IUserManagementService
     {
         Task<List<RegisteredUsersApiModel>> RetrieveRegisteredUsers();
     }

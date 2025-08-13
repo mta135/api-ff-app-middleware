@@ -1,12 +1,7 @@
-﻿using FFAppMiddleware.Model.DataBaseConnection;
+﻿using FFappMiddleware.DataAcces.DataBaseConnection;
 using FFAppMiddleware.Model.Models.UserManagement;
 using FFAppMiddleware.Model.Repositories.Abstract;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FFAppMiddleware.Model.Repositories.Real
 {

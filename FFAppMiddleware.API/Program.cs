@@ -1,13 +1,18 @@
-﻿using FFAppMiddleware.API.Core.Security.Authetication;
+﻿using FFappMiddleware.Application.Services.Abstract;
+using FFappMiddleware.Application.Services.Real;
+using FFAppMiddleware.API.Core.Security.Authetication;
 using FFAppMiddleware.API.DependencyInjection;
+using FFAppMiddleware.Model.Repositories.Abstract;
+using FFAppMiddleware.Model.Repositories.Real;
 using FFAppMiddleware.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationServices();
 ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
+builder.Services.RegisterApplicationServices ();
+
 
 #region JWT Token Configuration
 

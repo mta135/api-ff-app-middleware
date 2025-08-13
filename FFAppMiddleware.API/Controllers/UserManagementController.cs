@@ -1,25 +1,20 @@
-﻿using FFAppMiddleware.Model.Models.UserManagement;
-using FFAppMiddleware.Model.Repositories.Abstract;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using FFappMiddleware.Application.Services.Abstract;
+using FFAppMiddleware.Model.Models.UserManagement;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserManagementController : ControllerBase
     {
-        private readonly IUserManagementRepository _userManagementRepository;
+        private readonly IUserManagementService _userManagementService;
 
-        public UserManagementController(IUserManagementRepository userManagementRepository)
+        public UserManagementController(IUserManagementService userManagementService)
         {
-            _userManagementRepository = userManagementRepository;
+            _userManagementService = userManagementService;
         }
-
-
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(RegisteredUsersApiModel))]
@@ -28,7 +23,7 @@ namespace FFAppMiddleware.API.Controllers
         {
             try
             {
-                List<RegisteredUsersApiModel> users = await _userManagementRepository.RetrieveRegisteredUsers();
+                List<RegisteredUsersApiModel> users = await _userManagementService.RetrieveRegisteredUsers();
                 return Ok(users);
             }
             catch (Exception ex)
