@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.API", "FFAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.Model", "FFAppMiddleware.Model\FFAppMiddleware.Model.csproj", "{A50C34AD-EE4E-4329-AD70-984E896E2F99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.Application", "FFappMiddleware.Application\FFappMiddleware.Application.csproj", "{40CF6654-ECCD-4DEB-BF6C-5B85DB516775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.ApplicationServices", "FFappMiddleware.Application\FFappMiddleware.ApplicationServices.csproj", "{40CF6654-ECCD-4DEB-BF6C-5B85DB516775}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.DataBase", "FFappMiddleware.DataAcces\FFappMiddleware.DataBase.csproj", "{F8519852-92BA-4573-9194-BD0C63DB2F84}"
 EndProject
