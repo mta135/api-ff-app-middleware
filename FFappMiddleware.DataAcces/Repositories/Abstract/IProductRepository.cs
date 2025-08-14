@@ -10,5 +10,7 @@ namespace FFappMiddleware.DataBase.Repositories.Abstract
     public interface IProductRepository
     {
         Task<List<ProductApiModel>> RetrieveProducts();
+
+        Task<List<ProductcCategoriesApiModel>> GetProductsCategories();
     }
 }

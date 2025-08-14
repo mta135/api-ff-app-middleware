@@ -1,10 +1,11 @@
 ﻿using FFappMiddleware.Application.Services.Real;
 using FFAppMiddleware.Model.Models.UserManagement;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserManagementController : ControllerBase

@@ -13,9 +13,16 @@ namespace FFappMiddleware.Application.Services.Real
             _productRepository = productRepository;
         }
 
+ 
         public async Task<List<ProductApiModel>> RetrieveProducts()
         {
             List<ProductApiModel> products = await _productRepository.RetrieveProducts();
+            return products;
+        }
+
+        public async Task<List<ProductcCategoriesApiModel>> GetProductsCategories()
+        {
+            List<ProductcCategoriesApiModel> products = await _productRepository.GetProductsCategories();
             return products;
         }
     }
