@@ -1,24 +1,34 @@
-﻿using FFAppMiddleware.API.Core.Security.Authetication;
+﻿using FFappMiddleware.Application.Services.Abstract;
+using FFappMiddleware.DataBase.Logger;
+using FFAppMiddleware.API.Security;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/Security")]
     [ApiController]
+    [AllowAnonymous]
     public class SecurityController : ControllerBase
     {
-        private readonly JwtAuthenticationManager _jwtAuthenticationManager;
+        private readonly ICustomAuthenticationManager authManager;
 
-        public SecurityController(JwtAuthenticationManager jwtAuthenticationManager)
+        public SecurityController(ICustomAuthenticationManager authManager)
         {
-            _jwtAuthenticationManager = jwtAuthenticationManager;
+            this.authManager = authManager;
         }
 
-        [HttpPost]
-        public IActionResult GetStaticJwtAuthenticationToken()
-        {
-            string token = _jwtAuthenticationManager.GenerateStaticJwtAuthenticationToken();
-            return Ok(new { token });
-        }
+        //[HttpPost("StaticAuthenticationToken")]
+  
+        //public IActionResult GetStaticAuthenticationToken()
+        //{
+        //    string username = "admin";
+        //    string password = "password123";
+
+        //    string token = authManager.Authenticate(username, password);
+
+        //    return Ok(new { token });
+        //}
     }
 }

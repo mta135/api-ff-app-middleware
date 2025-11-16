@@ -1,10 +1,19 @@
 ﻿using FFAppMiddleware.Model.Models.UserManagement;
+using System.Threading.Tasks;
+using static FFAppMiddleware.Model.Models.UserManagement.UserModel;
 
 namespace FFappMiddleware.DataBase.Repositories.Abstract
 {
     public interface IUserManagementRepository
     {
-        Task<List<RegisteredUsersApiModel>> RetrieveRegisteredUsers();
+        Task<List<LoyaltyUser>> GetUserByPhone(string phone);
+        Task<List<LoyaltyUser>> GetUserByDiscountCardBarcode(string phone);
+
+        Task<UserRegistrationResult> UserRegistration(LoyaltyUser userInfo);
+        Task<List<LoyaltyUser>> UserInfoByToken(Guid token);
+        Task<List<Localites>> GetLocalites(string key);
+        Task<List<GenderTypes>> GetGenderTypes(string key);
+        
 
     }
 }

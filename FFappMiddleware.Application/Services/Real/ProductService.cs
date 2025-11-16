@@ -14,15 +14,34 @@ namespace FFappMiddleware.Application.Services.Real
         }
 
  
-        public async Task<List<ProductApiModel>> RetrieveProducts()
+        //public async Task<List<ProductModel>> RetrieveProducts()
+        //{
+        //    List<ProductModel> products = await _productRepository.RetrieveProducts();
+        //    return products;
+        //}
+
+        public async Task<List<ProductCategoriesModel>> ProductsCategories(string lang)
         {
-            List<ProductApiModel> products = await _productRepository.RetrieveProducts();
+            List<ProductCategoriesModel> products = await _productRepository.ProductsCategories(lang);
             return products;
         }
 
-        public async Task<List<ProductcCategoriesApiModel>> GetProductsCategories()
+
+        public async Task<ProductResponse> GetAllProducts(ProductRequest filter)
         {
-            List<ProductcCategoriesApiModel> products = await _productRepository.GetProductsCategories();
+            ProductResponse products = await _productRepository.GetAllProducts(filter);
+            return products;
+        }
+
+        public async Task<List<ProductModel>> GetPromotionsForProductId(List<long> ids)
+        {
+            List<ProductModel> products = await _productRepository.GetPromotionsForProductId(ids);
+            return products;
+        }
+
+        public async Task<List<long>> GetBestSellingProducts()
+        {
+            List<long> products = await _productRepository.GetBestSellingProducts();
             return products;
         }
     }

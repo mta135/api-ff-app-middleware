@@ -4,17 +4,33 @@ namespace FFAppMiddleware.Model.Settings
 {
     public class ConnectionStringSettings
     {
-        private static string _connectionString = string.Empty;
+        private static string _spherusPharmaConnectionString = string.Empty;
 
-        public static string ConnectionString
+        private static string _spherusMainConnectionString = string.Empty;
+
+        private static string _spherusPharmaFFConnectionString = string.Empty;
+
+        public static string SpherusPharma
         {
-            get { return _connectionString; }
+            get { return _spherusPharmaConnectionString; }
+        }
 
+        public static string SpherusMain
+        {
+            get { return _spherusMainConnectionString; }
+        }
+
+        public static string SpherusFarmaFF
+        {
+            get { return _spherusPharmaFFConnectionString; }
         }
 
         public static void InitializeConnectionString(IConfiguration configuration)
         {
-            _connectionString = configuration["ConnectionStrings:SpherusPharma"];
+            _spherusPharmaConnectionString = configuration.GetConnectionString("SpherusPharma");
+
+            _spherusMainConnectionString = configuration.GetConnectionString("SpherusMain");
+            _spherusPharmaFFConnectionString = configuration.GetConnectionString("SpherusPharmaFF");
         }
     }
 }

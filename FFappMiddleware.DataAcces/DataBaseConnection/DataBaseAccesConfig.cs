@@ -1,77 +1,97 @@
-﻿using FFAppMiddleware.Model.Settings;
+﻿using FFappMiddleware.DataBase.EncryptionService;
+using FFappMiddleware.DataBase.Logger;
+using FFAppMiddleware.Model.Settings;
 using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Common;
 
 namespace FFappMiddleware.DataAcces.DataBaseConnection
 {
     public class DataBaseAccesConfig
     {
-        private SqlConnection connection;
+        private SqlConnection _connection;
 
-        private readonly Lazy<Task<SqlConnection>> _lazyAsyncConnection;
+        private SqlConnection _pharmaFFconnection;
 
         public DataBaseAccesConfig()
         {
-            _lazyAsyncConnection = new Lazy<Task<SqlConnection>>(InitializeConnectionAsync);
+          
         }
 
-        public SqlConnection Connection
+        #region SpherusPharma
+
+        public Task<SqlConnection> ConnectionAsync => OpenConnectionAsync();
+
+        private async Task<SqlConnection> OpenConnectionAsync()
+        {
+            if (_connection == null || _connection.State != ConnectionState.Open)
+            {
+                if (_connection != null)
+                    await _connection.DisposeAsync();
+
+
+                var valu = Environment.GetEnvironmentVariable("Aes_Public_Key");
+
+                string connectionString = AesEncryptionHelper.Decrypt(ConnectionStringSettings.SpherusFarmaFF, "k65gR0Q3E0nKLxNk8A1Ceg==");
+
+                _connection = new SqlConnection(connectionString);
+                await _connection.OpenAsync();
+            }
+
+            return _connection;
+        }
+
+        #endregion
+
+        #region PharmaFFConnection
+
+        public Task<SqlConnection> PharmaFFConnectionAsync
         {
             get
             {
-                SetConnection();
-                return this.connection;
+                return OpenPharmaFFConnetionAsync();
             }
         }
-
-        public Task<SqlConnection> ConnectionAsync
+            
+        private async Task<SqlConnection> OpenPharmaFFConnetionAsync()
         {
-            get
+            if (_pharmaFFconnection == null || _pharmaFFconnection.State != ConnectionState.Open)
             {
-                return _lazyAsyncConnection.Value;
+                if (_pharmaFFconnection != null)
+                    await _connection.DisposeAsync();
+
+                _pharmaFFconnection = new SqlConnection(AesEncryptionHelper.Decrypt(ConnectionStringSettings.SpherusFarmaFF, "k65gR0Q3E0nKLxNk8A1Ceg=="));
+
+                WriteLog.DB.Error("Connection string: "+_pharmaFFconnection);
+                await _pharmaFFconnection.OpenAsync();
             }
+
+            return _pharmaFFconnection;
         }
 
-        private async Task<SqlConnection> InitializeConnectionAsync()
+        #endregion
+
+        #region Dispose
+
+        public async Task DisposeAsync()
         {
-            SqlConnection connection = new SqlConnection(ConnectionStringSettings.ConnectionString);
-            await connection.OpenAsync();
-            return connection;
+            await DisposeConnectionAsync(_connection);
+
+            await DisposeConnectionAsync(_pharmaFFconnection);
         }
 
-        private void SetConnection()
+        private async Task DisposeConnectionAsync(DbConnection connection)
         {
-            connection = new SqlConnection(ConnectionStringSettings.ConnectionString);
-            connection.Open();
-        }
-
-        public void Dispose()
-        {
-            if (connection?.State == ConnectionState.Open)
-                connection.Close();
-            connection?.Dispose();
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (_lazyAsyncConnection.IsValueCreated)
+            if (connection != null)
             {
-                SqlConnection connection = await _lazyAsyncConnection.Value;
-
-                if (connection?.State == ConnectionState.Open)
+                if (connection.State == ConnectionState.Open)
                     await connection.CloseAsync();
 
-                if (connection != null)
-                    await connection.DisposeAsync();
+                await connection.DisposeAsync();
             }
-
-            connection?.Dispose();
         }
+
+        #endregion
     }
 }
 

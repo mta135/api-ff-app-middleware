@@ -9,8 +9,11 @@ namespace FFappMiddleware.DataBase.Repositories.Abstract
 {
     public interface IProductRepository
     {
-        Task<List<ProductApiModel>> RetrieveProducts();
+        Task<List<ProductCategoriesModel>> ProductsCategories(string lang);
 
-        Task<List<ProductcCategoriesApiModel>> GetProductsCategories();
+        Task<ProductResponse> GetAllProducts(ProductRequest filter);
+        Task<List<ProductModel>> GetPromotionsForProductId(List<long> ids);
+
+        Task<List<long>> GetBestSellingProducts();
     }
 }

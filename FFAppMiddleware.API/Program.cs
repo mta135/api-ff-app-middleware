@@ -1,5 +1,7 @@
-﻿using FFAppMiddleware.API.Core.Security.Authetication;
+﻿using FFappMiddleware.Application.Services.Real;
+using FFappMiddleware.DataBase.Logger;
 using FFAppMiddleware.API.DependencyInjection;
+using FFAppMiddleware.API.Security;
 using FFAppMiddleware.Model.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
@@ -10,15 +12,15 @@ ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
 builder.Services.RegisterApplicationServices();
 
 
-#region JWT Token Configuration
+builder.Services.AddSingleton<ICustomAuthenticationManager, CustomAuthenticationManager>();
 
-builder.Services.Configure<JwtAuthenticationTokenConfig>(builder.Configuration.GetSection("JwtTokenConfig"));
-builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddSingleton<JwtAuthenticationManager>();
-
-#endregion
+builder.Services.AddAuthentication(CustomBearerAuthenticationOptions.DefaultScheme)
+    .AddScheme<CustomBearerAuthenticationOptions, CustomAuthenticationHandler>(CustomBearerAuthenticationOptions.DefaultScheme, null);
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<UserManagementService>();
+
+WriteLog.InitLoggers();
 
 #region Swagger/OpenAPI Configuration
 
@@ -42,6 +44,8 @@ builder.Services.AddSwaggerGen(c =>
             Url = new Uri("https://example.com/license"),
         },
     });
+
+    //c.SchemaFilter<NullableDefaultSchemaFilter>();
     c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme. <br /><br />" +
@@ -80,9 +84,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+
 }
 
-app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

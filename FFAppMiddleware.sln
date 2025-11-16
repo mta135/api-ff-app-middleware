@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.Application
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFappMiddleware.DataBase", "FFappMiddleware.DataAcces\FFappMiddleware.DataBase.csproj", "{F8519852-92BA-4573-9194-BD0C63DB2F84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFAppMiddleware.Console", "FFAppMiddleware.Console\FFAppMiddleware.Console.csproj", "{44F71D75-61C7-4662-8311-28F0031629C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F8519852-92BA-4573-9194-BD0C63DB2F84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8519852-92BA-4573-9194-BD0C63DB2F84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8519852-92BA-4573-9194-BD0C63DB2F84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F71D75-61C7-4662-8311-28F0031629C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F71D75-61C7-4662-8311-28F0031629C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F71D75-61C7-4662-8311-28F0031629C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F71D75-61C7-4662-8311-28F0031629C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
