@@ -50,6 +50,7 @@ FROM product_therapeutic_groups_site";
 
                         products.Add(productCategoriesModel);
                     }
+                    reader.Close();
                 }
 
                 return products;
@@ -356,6 +357,55 @@ WHERE
 
 
         }
+        public async Task<List<PromotionResponse>> GetAllPromotions()
+        {
+            string query = @"SELECT  [promotion_id]
+                          ,[promotion_name] 
+                          ,promotion_begin_date
+                          ,[promotion_end_date]     
+                      FROM [promotions]
+                      wHERE [promotion_begin_date] <= GETDATE()
+                      AND [promotion_end_date] >= GETDATE() 
+                      AND promotion_is_validated=1 and is_archived=0;";
+
+            try
+            {
+                var connection = await _db.PharmaFFConnectionAsync;
+                if (connection.State != ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                using var command = new SqlCommand(query, connection);
+                var promos = new List<PromotionResponse>();
+
+                using var reader = await command.ExecuteReaderAsync();
+                
+                    while(await reader.ReadAsync())
+                    {
+                    PromotionResponse productCategoriesModel = new PromotionResponse
+                        {
+                        PromotionId = Convert.ToInt64(reader["promotion_id"]),
+                        PromotionName = Convert.ToString(reader["promotion_name"]),
+                        PromotionBeginDate = reader["promotion_begin_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)reader["promotion_begin_date"],
+                        PromotionEndDate = reader["promotion_end_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)reader["promotion_end_date"]
+                    };
+
+                    promos.Add(productCategoriesModel);
+                    }
+                    reader.Close();
+
+
+                return promos;
+            }
+            catch (SqlException ex)
+            {
+                WriteLog.DB.Error("GetBestSellingProducts method. SqlException: ", ex);
+                return new List<PromotionResponse>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetBestSellingProducts method. General Exception: ", ex);
+            }
+        }
 
 
         public async Task<List<long>> GetBestSellingProducts()
@@ -379,13 +429,57 @@ WHERE
                 {
                     productIds.Add(Convert.ToInt64(reader["product_id"]));
                 }
-
+                reader.Close();
                 return productIds;
             }
             catch (SqlException ex)
             {
                 WriteLog.DB.Error("GetBestSellingProducts method. SqlException: ", ex);
                 return new List<long>();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("GetBestSellingProducts method. General Exception: ", ex);
+            }
+        }
+
+        public async Task<List<Brands>>  GetBestBrands()
+        {
+            string query = @"SELECT  
+      cbb.brand_id,
+	  b.brand_name      
+  FROM crm_best_brands cbb
+  INNER JOIN brands b
+  on b.brand_id = cbb.brand_id
+
+  WHERE date_from <= GETDATE() AND date_to >= GETDATE();";
+
+            try
+            {
+                var connection = await _db.PharmaFFConnectionAsync;
+                if (connection.State != ConnectionState.Open)
+                    await connection.OpenAsync();
+
+                using var command = new SqlCommand(query, connection);
+                var branduri = new List<Brands>();
+
+                using var reader = await command.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
+                {
+                    Brands productCategoriesModel = new Brands
+                    {
+                        Id = Convert.ToInt64(reader["brand_id"]),
+                        Name = Convert.ToString(reader["brand_name"])                       
+                    };
+                    branduri.Add(productCategoriesModel);
+                }
+                reader.Close();
+                return branduri;
+            }
+            catch (SqlException ex)
+            {
+                WriteLog.DB.Error("GetBestSellingProducts method. SqlException: ", ex);
+                return new List<Brands>();
             }
             catch (Exception ex)
             {

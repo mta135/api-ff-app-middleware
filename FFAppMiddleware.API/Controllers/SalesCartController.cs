@@ -1,14 +1,14 @@
 ﻿using FFappMiddleware.Application.Services.Real;
 using FFappMiddleware.DataBase.Logger;
+using FFAppMiddleware.API.Authorization;
+using FFAppMiddleware.API.Security;
 using FFAppMiddleware.Model.Models.SaleChart;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static FFAppMiddleware.Model.Models.SaleChart.PreCheckModel;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    [Authorize]
-    //[Route("api/[controller]/[action]")]
+    [AuthorizeRoles(CustomUserRoleEnum.RoleAleator)]
     [Route("api/SalesCart")]
     [ApiController]
     public class SalesCartController : ControllerBase
@@ -18,30 +18,12 @@ namespace FFAppMiddleware.API.Controllers
         public SalesCartController(ISaleCartService saleChartService)
         {
             _SaleCartService = saleChartService;
-        }
-
-        //[HttpPost("PreCeck")]
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Cart))]
-        //[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        //public async Task<IActionResult> GetPreCeck([FromBody] List<CartItem> details, int clientId, long cardId)
-        //{
-        //    try
-        //    {
-        //        List<Cart> users = await _SaleCartService.PreCeckCart(details, clientId, cardId);
-        //        return Ok(users);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        WriteLog.Web.Error("Error retrieving data from the database", ex);
-        //        return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database: {ex.Message}");
-        //    }
-        //}
-
+        }       
 
         [HttpPost("PreCheck")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Cart))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> PreCheck(PreCheckApiModel preCheckApiModel) // Mihai
+        public async Task<IActionResult> PreCheck(PreCheckApiModel preCheckApiModel) 
         {
             try
             {
@@ -57,10 +39,14 @@ namespace FFAppMiddleware.API.Controllers
 
 
         [HttpPost("ConfirmPreCheck")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Cart))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Cart>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> ConfirmPreCheck(Cart preCheckApiModel) 
+        public async Task<IActionResult> ConfirmPreCheck([FromBody] Cart preCheckApiModel)
         {
+            if (preCheckApiModel == null)
+                return BadRequest("Request body is required.");
+
             try
             {
                 List<Cart> carts = await _SaleCartService.ConfirmPreCheck(preCheckApiModel);
@@ -69,9 +55,11 @@ namespace FFAppMiddleware.API.Controllers
             catch (Exception ex)
             {
                 WriteLog.Web.Error("Error retrieving data from the database", ex);
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
             }
         }
+
 
     }
 }

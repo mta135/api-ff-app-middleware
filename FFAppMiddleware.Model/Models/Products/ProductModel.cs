@@ -55,5 +55,13 @@
 
         public bool PromotionUseProducts { get; set; }
     }
-   
+    public class Brands
+    {
+        public long Id { get; set; }
+
+        public string Name { get; set; }
+
+      
+    }
+
 }

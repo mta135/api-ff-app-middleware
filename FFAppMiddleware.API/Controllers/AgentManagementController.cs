@@ -1,20 +1,21 @@
 ﻿using FFappMiddleware.Application.Services.Abstract;
 using FFappMiddleware.DataBase.Logger;
+using FFAppMiddleware.API.Authorization;
+using FFAppMiddleware.API.Security;
 using FFAppMiddleware.Model.Models.Agents;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    //[Route("api/[controller]/[action]")]
-    [Authorize]
+
+    [AuthorizeRoles(CustomUserRoleEnum.RoleAleator)]
     [Route("api/Agent")]
     [ApiController]
     public class AgentManagementController : ControllerBase
     {
         private readonly IAgentManagementService _agentManagementService;
 
-        public AgentManagementController(IAgentManagementService agentManagementService)
+         public AgentManagementController(IAgentManagementService agentManagementService)
         {
             _agentManagementService = agentManagementService;
         }
@@ -27,6 +28,8 @@ namespace FFAppMiddleware.API.Controllers
         {
             try
             {
+                WriteLog.Web.Info("Method GetAgent().");
+
                 List<AgentModel> users = await _agentManagementService.GetAgents();
                 return Ok(users);
             }

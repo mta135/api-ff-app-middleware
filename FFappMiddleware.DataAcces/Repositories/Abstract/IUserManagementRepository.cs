@@ -6,11 +6,16 @@ namespace FFappMiddleware.DataBase.Repositories.Abstract
 {
     public interface IUserManagementRepository
     {
-        Task<List<LoyaltyUser>> GetUserByPhone(string phone);
-        Task<List<LoyaltyUser>> GetUserByDiscountCardBarcode(string phone);
+        Task<List<LoyaltyUser>> GetUserByPhone(PhoneNumberRequest phone);
+        Task<List<LoyaltyUser>> GetUserByDiscountCardBarcode(DiscountCardNumberRequest phone);
 
-        Task<UserRegistrationResult> UserRegistration(LoyaltyUser userInfo);
-        Task<List<LoyaltyUser>> UserInfoByToken(Guid token);
+        Task<UserRegistrationResult> UserRegistration(LoyaltyUserEdit userInfo);
+        Task<List<UserTransaction>> UserTransactions(UserRequest token);
+        Task<List<LoyaltyUser>> UpdateClientInformation(LoyaltyUserEdit clientinfo);
+        Task<CardEdit> UpdateDiscountCardInformation(CardEdit card);
+        Task<List<UserTransaction>> UserOrders(UserRequest token);
+        Task<List<LoyaltyUser>> UserInfoByToken(UserRequest token);
+        Task<LoyaltyUser> GenerateDiscountCard(UserRequest token);
         Task<List<Localites>> GetLocalites(string key);
         Task<List<GenderTypes>> GetGenderTypes(string key);
         

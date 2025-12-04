@@ -13,7 +13,8 @@ namespace FFappMiddleware.DataBase.Repositories.Abstract
 
         Task<ProductResponse> GetAllProducts(ProductRequest filter);
         Task<List<ProductModel>> GetPromotionsForProductId(List<long> ids);
-
+        Task<List<PromotionResponse>> GetAllPromotions();
         Task<List<long>> GetBestSellingProducts();
+        Task<List<Brands>> GetBestBrands();
     }
 }

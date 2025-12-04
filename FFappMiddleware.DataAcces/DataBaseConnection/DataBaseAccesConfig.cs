@@ -62,7 +62,8 @@ namespace FFappMiddleware.DataAcces.DataBaseConnection
 
                 _pharmaFFconnection = new SqlConnection(AesEncryptionHelper.Decrypt(ConnectionStringSettings.SpherusFarmaFF, "k65gR0Q3E0nKLxNk8A1Ceg=="));
 
-                WriteLog.DB.Error("Connection string: "+_pharmaFFconnection);
+                string connStr = _pharmaFFconnection.ConnectionString;
+
                 await _pharmaFFconnection.OpenAsync();
             }
 
@@ -88,6 +89,32 @@ namespace FFappMiddleware.DataAcces.DataBaseConnection
                     await connection.CloseAsync();
 
                 await connection.DisposeAsync();
+            }
+        }
+
+        public async Task DisposeObjectsAsync(params object[] items)
+        {
+            if (items == null || items.Length == 0) return;
+
+            foreach (var item in items)
+            {
+                if (item == null) continue;
+
+                try
+                {
+                    if (item is IAsyncDisposable asyncDisposable)
+                    {
+                        await asyncDisposable.DisposeAsync().ConfigureAwait(false);
+                    }
+                    else if (item is IDisposable disposable)
+                    {
+                        disposable.Dispose();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Eroare la Dispose: {ex.Message}");
+                }
             }
         }
 

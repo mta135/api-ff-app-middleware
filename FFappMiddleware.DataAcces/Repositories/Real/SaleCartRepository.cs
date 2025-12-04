@@ -384,6 +384,7 @@ namespace FFappMiddleware.DataBase.Repositories.Real
                     });
                 }
             }
+            reader.Close();
 
             return result;
         }

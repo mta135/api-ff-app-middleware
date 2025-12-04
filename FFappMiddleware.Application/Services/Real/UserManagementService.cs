@@ -14,29 +14,58 @@ namespace FFappMiddleware.Application.Services.Real
            _userRepository = userRepository;
         }
 
-        public async Task<List<LoyaltyUser>> GetUserByPhone(string phone)
+        public async Task<List<LoyaltyUser>> GetUserByPhone(PhoneNumberRequest phone)
         {
             List<LoyaltyUser> users = await _userRepository.GetUserByPhone(phone);
             return users;
         }
 
-        public async Task<List<LoyaltyUser>> GetUserByDiscountCardBarcode(string barcode)
+        public async Task<List<LoyaltyUser>> GetUserByDiscountCardBarcode(DiscountCardNumberRequest barcode)
         {
             List<LoyaltyUser> users = await _userRepository.GetUserByDiscountCardBarcode(barcode);
             return users;
         }
 
-        public async Task<UserRegistrationResult> UserRegistration(LoyaltyUser userInfo)
+        public async Task<UserRegistrationResult> UserRegistration(LoyaltyUserEdit userInfo)
         {
             UserRegistrationResult user = await _userRepository.UserRegistration(userInfo);
             return user;
         }
-        public async Task<List<LoyaltyUser>> UserInfoByToken(Guid token)
+
+        public async Task<List<UserTransaction>> UserTransactions(UserRequest token)
+        {
+            List<UserTransaction> usertr = await _userRepository.UserTransactions(token);
+            return usertr;
+        }
+        public async Task<List<LoyaltyUser>> UpdateClientInformation(LoyaltyUserEdit info)
+        {
+            List<LoyaltyUser> usertr = await _userRepository.UpdateClientInformation(info);
+            return usertr;
+        }
+
+        public async Task<CardEdit> UpdateDiscountCardInformation(CardEdit card)
+        {
+            CardEdit usertr = await _userRepository.UpdateDiscountCardInformation(card);
+            return usertr;
+        }
+
+        public async Task<List<UserTransaction>> UserOrders(UserRequest token)
+        {
+            List<UserTransaction> usertr = await _userRepository.UserOrders(token);
+            return usertr;
+        }
+
+        public async Task<List<LoyaltyUser>> UserInfoByToken(UserRequest token)
         {
             List<LoyaltyUser> users = await _userRepository.UserInfoByToken(token);
             return users;
         }
-        
+        public async Task<LoyaltyUser> GenerateDiscountCard(UserRequest userid)
+        {
+            LoyaltyUser users = await _userRepository.GenerateDiscountCard(userid);
+            return users;
+        }
+
         public async Task<List<Localites>> GetLocalites(string key)
         {
             List<Localites> users = await _userRepository.GetLocalites(key);

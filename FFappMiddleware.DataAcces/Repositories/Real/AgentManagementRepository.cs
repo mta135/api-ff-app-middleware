@@ -92,7 +92,9 @@ namespace FFappMiddleware.DataBase.Repositories.Real
 
                             agents.Add(agentModel);
                         }
+                        reader.Close();
                     }
+                  
                 }
 
                 return agents;

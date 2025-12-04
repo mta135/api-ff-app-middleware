@@ -1,12 +1,12 @@
 ﻿using FFappMiddleware.Application.Services.Abstract;
+using FFAppMiddleware.API.Authorization;
+using FFAppMiddleware.API.Security;
 using FFAppMiddleware.Model.Models.Products;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FFAppMiddleware.API.Controllers
 {
-    [Authorize]
-   // /[Route("api/[controller]/[action]")]
+    [AuthorizeRoles(CustomUserRoleEnum.RoleAleator)]
     [Route("api/Product")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -35,9 +35,9 @@ namespace FFAppMiddleware.API.Controllers
         }
 
         [HttpGet("ProductCategories")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductCategoriesModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductCategoriesModel>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> ProductCategories(string lang)
+        public async Task<IActionResult> ProductCategories([FromQuery] string lang)
         {
             try
             {
@@ -46,28 +46,35 @@ namespace FFAppMiddleware.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
             }
         }
 
 
+
         [HttpPost("ProductPromotions")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ProductModel>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetProductPromotionsByProductId([FromBody]List<long> productids)
+        public async Task<IActionResult> GetProductPromotionsByProductId([FromBody] List<long> productIds)
         {
+            if (productIds == null || !productIds.Any())
+                return BadRequest("Product IDs are required.");
+
             try
             {
-                List<ProductModel> products = await _productService.GetPromotionsForProductId(productids);
+                List<ProductModel> products = await _productService.GetPromotionsForProductId(productIds);
                 return Ok(products);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
             }
         }
+
         [HttpGet("GetBestSellingProducts")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(long))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<long>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetBestSellingProducts()
         {
@@ -78,10 +85,47 @@ namespace FFAppMiddleware.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving data from the database: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
             }
         }
-        
+
+        [HttpGet("GetBestBrands")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Brands>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetBestBrands()
+        {
+            try
+            {
+                List<Brands> brands = await _productService.GetBestBrands();
+                return Ok(brands);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
+            }
+        }
+
+
+        [HttpGet("GetAllPromotions")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PromotionResponse>))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetAllPromotions()
+        {
+            try
+            {
+                List<PromotionResponse> products = await _productService.GetAllPromotions();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Error retrieving data from the database: {ex.Message}");
+            }
+        }
+
+
 
 
 

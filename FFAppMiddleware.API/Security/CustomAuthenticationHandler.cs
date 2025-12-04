@@ -81,7 +81,7 @@ namespace FFAppMiddleware.API.Security
             {
                 new Claim("Id", _authenticationParams.Id),
                 new Claim("UserName", _authenticationParams.Username),
-                new Claim("Role", _authenticationParams.Role),
+                new Claim(ClaimTypes.Role, _authenticationParams.Role),
                 new Claim("Description", _authenticationParams.Description),
 
                 new Claim(ClaimTypes.AuthenticationMethod, Options.AuthenticationType),
@@ -114,7 +114,22 @@ namespace FFAppMiddleware.API.Security
             };
 
             await Response.WriteAsJsonAsync(problemDetails);
+        }
 
+        protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)
+        {
+            Response.StatusCode = StatusCodes.Status403Forbidden;
+            Response.ContentType = "application/json";
+
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status403Forbidden,
+                Title = "Forbidden",
+                Detail = "User authenticated but does not have permission to access this resource.",
+                Instance = Context.Request.Path
+            };
+
+            await Response.WriteAsJsonAsync(problemDetails);
         }
     }
 }

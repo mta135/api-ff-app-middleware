@@ -1,74 +1,39 @@
-﻿using System.Net.NetworkInformation;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace FFAppMiddleware.API.Security
 {
     public class CustomAuthenticationManager : ICustomAuthenticationManager
     {
-        UserAuthenticationModel multipleUser = new UserAuthenticationModel
-        {
-            USERNAME = "admin",
-            PASSWORD = "password123",
-            ID = "a3f9c2d1-4b7e-4f1a-9d8c-2e5b6a7c8d9f",
-            DESCRIPTION = "Dita EstFarm"
-        };
+        private readonly AuthenticationParams allUsers = new(CustomUserRoleEnum.RoleAleator);
 
-        UserAuthenticationModel shopifyUser = new UserAuthenticationModel
-        {
-            USERNAME = "shopify_user",
-            PASSWORD = "shopify_pass",
-            ID = "b4g0d3e2-5c8f-5g2b-0h9d-3f6c7b8d9e0g",
-            DESCRIPTION = "Shopify Integration User"
-        };
+        private readonly AuthenticationParams shopifyUser = new(CustomUserRoleEnum.ShopifyUser);
 
+        private readonly string _allUsersToken;
 
-        private readonly string _multipleUsersToken;
-        private readonly string _shopifyUser;
+        private readonly string _shopifyToken;
 
-
-        private static  Dictionary<string, AuthenticationParams> _staticTokenMap;
+        private readonly Dictionary<string, AuthenticationParams> _staticTokenMap = new Dictionary<string, AuthenticationParams>();
 
         public CustomAuthenticationManager()
         {
-            _multipleUsersToken = GenerateStaticToken(multipleUser);
-            _shopifyUser = GenerateStaticToken(shopifyUser);
+            _allUsersToken = GenerateStaticToken(allUsers);
+            _shopifyToken = GenerateStaticToken(shopifyUser);
 
-            _staticTokenMap = new Dictionary<string, AuthenticationParams>
-            {
-                {
-                    _multipleUsersToken,
-                    new AuthenticationParams
-                    {
-                        Username = multipleUser.USERNAME,
-                        Password = multipleUser.PASSWORD,
-                        Id = multipleUser.ID,
-                        Description = multipleUser.DESCRIPTION
-                    }
-                },
-                {
-                    _shopifyUser,
-                    new AuthenticationParams
-                    {
-                        Username = shopifyUser.USERNAME,
-                        Password = shopifyUser.PASSWORD,
-                        Id = shopifyUser.ID,
-                        Description = shopifyUser.DESCRIPTION
-                    }
-                }
-            };
+            _staticTokenMap.Add(_allUsersToken, allUsers);
+            _staticTokenMap.Add(_shopifyToken, shopifyUser);
         }
 
         public string Authenticate(string username, string password)
         {
-            if (username == multipleUser.USERNAME && password == multipleUser.PASSWORD)
+            if (username == allUsers.Username && password == allUsers.Password)
             {
-                return _multipleUsersToken; 
+                return _allUsersToken; 
             }
 
-            if(username == shopifyUser.USERNAME && password == shopifyUser.PASSWORD)
+            if(username == shopifyUser.Username && password == shopifyUser.Password)
             {
-                return _shopifyUser;
+                return _shopifyToken;
             }
 
             return null;
@@ -79,48 +44,27 @@ namespace FFAppMiddleware.API.Security
             return !string.IsNullOrEmpty(token) && _staticTokenMap.ContainsKey(token);
         }
 
-        public string GetUsernameFromToken(string token)
-        {
-            return ValidateToken(token) ? multipleUser.USERNAME : null;
-        }
-
-
-
-        private string GenerateStaticToken(UserAuthenticationModel authenticationModel)
+        private string GenerateStaticToken(AuthenticationParams auth)
         {
             using var sha = SHA256.Create();
-
-            string raw = $"{authenticationModel.USERNAME}:{authenticationModel.PASSWORD}:static:{authenticationModel.ID}:{authenticationModel.DESCRIPTION} //";
+            string raw = $"{auth.Username}:{auth.Password}:static:{auth.Id}:{auth.Description} //";
             byte[] bytes = Encoding.UTF8.GetBytes(raw);
 
             byte[] hash = sha.ComputeHash(bytes);
             return Convert.ToHexString(hash);
         }
 
-
         public AuthenticationParams GetAuthenticationParamsByToken(string token)
         {
-            return ValidateToken(token) ? new AuthenticationParams()
+            AuthenticationParams authentication = null;
+
+            if (ValidateToken(token))
             {
-                //Username = USERNAME,
-                //Password = PASSWORD,
-                //Description = DESCRIPTION,
-                //Id = ID,
+                _staticTokenMap.TryGetValue(token, out AuthenticationParams userParams);
+                return authentication = userParams;
+            }
 
-            } : null;
+            return authentication;
         }
-    }
-
-    public class AuthenticationParams
-    {
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-
-        public string Id { get; set; }
-
-        public string Description { get; set; }
-
-        public string Role { get; set; } = "RoleAleator";
     }
 }

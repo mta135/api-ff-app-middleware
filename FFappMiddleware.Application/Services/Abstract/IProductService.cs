@@ -12,7 +12,9 @@ namespace FFappMiddleware.Application.Services.Abstract
 
         Task<List<ProductModel>> GetPromotionsForProductId(List<long> ids);
         Task<List<long>> GetBestSellingProducts();
-        
+        Task<List<Brands>> GetBestBrands();
+        Task<List<PromotionResponse>> GetAllPromotions();
+
     }
    
 }

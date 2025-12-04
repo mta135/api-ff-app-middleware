@@ -19,8 +19,6 @@ namespace FFAppMiddleware.API.Security
 
         bool ValidateToken(string token);
 
-        string GetUsernameFromToken(string token);
-
         AuthenticationParams GetAuthenticationParamsByToken(string token);
     }
 }

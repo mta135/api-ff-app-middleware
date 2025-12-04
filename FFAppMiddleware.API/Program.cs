@@ -11,11 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 ConnectionStringSettings.InitializeConnectionString(builder.Configuration);
 builder.Services.RegisterApplicationServices();
 
-
-builder.Services.AddSingleton<ICustomAuthenticationManager, CustomAuthenticationManager>();
-
-builder.Services.AddAuthentication(CustomBearerAuthenticationOptions.DefaultScheme)
-    .AddScheme<CustomBearerAuthenticationOptions, CustomAuthenticationHandler>(CustomBearerAuthenticationOptions.DefaultScheme, null);
+builder.Services.AddCustomSecurity();
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<UserManagementService>();
@@ -84,8 +80,6 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-
 }
 
 app.UseSwagger();

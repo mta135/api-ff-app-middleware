@@ -39,10 +39,21 @@ namespace FFappMiddleware.Application.Services.Real
             return products;
         }
 
+        public async Task<List<PromotionResponse>> GetAllPromotions()
+        {
+            List<PromotionResponse> products = await _productRepository.GetAllPromotions();
+            return products;
+        }
+
         public async Task<List<long>> GetBestSellingProducts()
         {
             List<long> products = await _productRepository.GetBestSellingProducts();
             return products;
+        }
+        public async Task<List<Brands>> GetBestBrands()
+        {
+            List<Brands> brands = await _productRepository.GetBestBrands();
+            return brands;
         }
     }
    

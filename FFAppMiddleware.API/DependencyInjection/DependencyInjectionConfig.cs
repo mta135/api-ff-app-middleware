@@ -21,6 +21,9 @@ namespace FFAppMiddleware.API.DependencyInjection
 
             services.AddScoped<IAgentManagementService, AgentManagementService>();
             services.AddScoped<IAgentManagementRepository, AgentManagementRepository>();
+      
+            services.AddScoped<IWebOrderService, WebOrderService>();
+            services.AddScoped<IWebOrderRepository, WebOrderRepository>();
 
             #region Security
 

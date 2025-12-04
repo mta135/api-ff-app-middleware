@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace FFAppMiddleware.Model.Models.WebOrderModel
+{
+    public class Pharmacy
+    {
+        [JsonPropertyName("pharmacy_id")]
+        public long? PharmacyId { get; set; }
+    }
+}

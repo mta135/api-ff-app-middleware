@@ -39,8 +39,8 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("checkout_token")]
         public string? CheckoutToken { get; set; }
 
-        [JsonPropertyName("client_details")]
-        public ClientDetails? ClientDetails { get; set; }
+      //  [JsonPropertyName("client_details")]
+    //    public ClientDetails? ClientDetails { get; set; }
 
         [JsonPropertyName("closed_at")]
         public DateTimeOffset? ClosedAt { get; set; }
@@ -66,32 +66,32 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("current_subtotal_price")]
         public string? CurrentSubtotalPrice { get; set; }
 
-        [JsonPropertyName("current_subtotal_price_set")]
-        public MoneySet? CurrentSubtotalPriceSet { get; set; }
+      //  [JsonPropertyName("current_subtotal_price_set")]
+      //  public MoneySet? CurrentSubtotalPriceSet { get; set; }
 
-        [JsonPropertyName("current_total_additional_fees_set")]
-        public MoneySet? CurrentTotalAdditionalFeesSet { get; set; }
+     //   [JsonPropertyName("current_total_additional_fees_set")]
+     //   public MoneySet? CurrentTotalAdditionalFeesSet { get; set; }
 
         [JsonPropertyName("current_total_discounts")]
         public string? CurrentTotalDiscounts { get; set; }
 
-        [JsonPropertyName("current_total_discounts_set")]
-        public MoneySet? CurrentTotalDiscountsSet { get; set; }
+       // [JsonPropertyName("current_total_discounts_set")]
+      //  public MoneySet? CurrentTotalDiscountsSet { get; set; }
 
-        [JsonPropertyName("current_total_duties_set")]
-        public MoneySet? CurrentTotalDutiesSet { get; set; }
+     //   [JsonPropertyName("current_total_duties_set")]
+     //   public MoneySet? CurrentTotalDutiesSet { get; set; }
 
         [JsonPropertyName("current_total_price")]
         public string? CurrentTotalPrice { get; set; }
 
-        [JsonPropertyName("current_total_price_set")]
-        public MoneySet? CurrentTotalPriceSet { get; set; }
+      //  [JsonPropertyName("current_total_price_set")]
+     //   public MoneySet? CurrentTotalPriceSet { get; set; }
 
         [JsonPropertyName("current_total_tax")]
         public string? CurrentTotalTax { get; set; }
 
-        [JsonPropertyName("current_total_tax_set")]
-        public MoneySet? CurrentTotalTaxSet { get; set; }
+      //  [JsonPropertyName("current_total_tax_set")]
+     //   public MoneySet? CurrentTotalTaxSet { get; set; }
 
         [JsonPropertyName("customer_locale")]
         public string? CustomerLocale { get; set; }
@@ -138,8 +138,8 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("note")]
         public string? Note { get; set; }
 
-        [JsonPropertyName("note_attributes")]
-        public List<NoteAttribute>? NoteAttributes { get; set; }
+//[JsonPropertyName("note_attributes")]
+//public List<NoteAttribute>? NoteAttributes { get; set; }
 
         [JsonPropertyName("number")]
         public int Number { get; set; }
@@ -150,11 +150,11 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("order_status_url")]
         public string? OrderStatusUrl { get; set; }
 
-        [JsonPropertyName("original_total_additional_fees_set")]
-        public MoneySet? OriginalTotalAdditionalFeesSet { get; set; }
+      //  [JsonPropertyName("original_total_additional_fees_set")]
+      //  public MoneySet? OriginalTotalAdditionalFeesSet { get; set; }
 
-        [JsonPropertyName("original_total_duties_set")]
-        public MoneySet? OriginalTotalDutiesSet { get; set; }
+      //  [JsonPropertyName("original_total_duties_set")]
+     //   public MoneySet? OriginalTotalDutiesSet { get; set; }
 
         [JsonPropertyName("payment_gateway_names")]
         public List<string>? PaymentGatewayNames { get; set; }
@@ -189,8 +189,8 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("subtotal_price")]
         public string? SubtotalPrice { get; set; }
 
-        [JsonPropertyName("subtotal_price_set")]
-        public MoneySet? SubtotalPriceSet { get; set; }
+      //  [JsonPropertyName("subtotal_price_set")]
+      //  public MoneySet? SubtotalPriceSet { get; set; }
 
         [JsonPropertyName("tags")]
         public string? Tags { get; set; }
@@ -198,8 +198,8 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("tax_exempt")]
         public bool TaxExempt { get; set; }
 
-        [JsonPropertyName("tax_lines")]
-        public List<TaxLine>? TaxLines { get; set; }
+      //  [JsonPropertyName("tax_lines")]
+      //  public List<TaxLine>? TaxLines { get; set; }
 
         [JsonPropertyName("taxes_included")]
         public bool TaxesIncluded { get; set; }
@@ -210,23 +210,23 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("token")]
         public string? Token { get; set; }
 
-        [JsonPropertyName("total_cash_rounding_payment_adjustment_set")]
-        public MoneySet? TotalCashRoundingPaymentAdjustmentSet { get; set; }
+      //  [JsonPropertyName("total_cash_rounding_payment_adjustment_set")]
+     //   public MoneySet? TotalCashRoundingPaymentAdjustmentSet { get; set; }
 
-        [JsonPropertyName("total_cash_rounding_refund_adjustment_set")]
-        public MoneySet? TotalCashRoundingRefundAdjustmentSet { get; set; }
+     //   [JsonPropertyName("total_cash_rounding_refund_adjustment_set")]
+     //   public MoneySet? TotalCashRoundingRefundAdjustmentSet { get; set; }
 
         [JsonPropertyName("total_discounts")]
         public string? TotalDiscounts { get; set; }
 
-        [JsonPropertyName("total_discounts_set")]
-        public MoneySet? TotalDiscountsSet { get; set; }
+      //  [JsonPropertyName("total_discounts_set")]
+      //  public MoneySet? TotalDiscountsSet { get; set; }
 
         [JsonPropertyName("total_line_items_price")]
         public string? TotalLineItemsPrice { get; set; }
 
-        [JsonPropertyName("total_line_items_price_set")]
-        public MoneySet? TotalLineItemsPriceSet { get; set; }
+     //   [JsonPropertyName("total_line_items_price_set")]
+     //   public MoneySet? TotalLineItemsPriceSet { get; set; }
 
         [JsonPropertyName("total_outstanding")]
         public string? TotalOutstanding { get; set; }
@@ -234,17 +234,17 @@ namespace FFAppMiddleware.Model.Models.WebOrderModel
         [JsonPropertyName("total_price")]
         public string? TotalPrice { get; set; }
 
-        [JsonPropertyName("total_price_set")]
-        public MoneySet? TotalPriceSet { get; set; }
-
-        [JsonPropertyName("total_shipping_price_set")]
-        public MoneySet? TotalShippingPriceSet { get; set; }
+     //   [JsonPropertyName("total_price_set")]
+     //   public MoneySet? TotalPriceSet { get; set; }
+//
+     //   [JsonPropertyName("total_shipping_price_set")]
+   //     public MoneySet? TotalShippingPriceSet { get; set; }
 
         [JsonPropertyName("total_tax")]
         public string? TotalTax { get; set; }
 
-        [JsonPropertyName("total_tax_set")]
-        public MoneySet? TotalTaxSet { get; set; }
+    //    [JsonPropertyName("total_tax_set")]
+    //    public MoneySet? TotalTaxSet { get; set; }
 
         [JsonPropertyName("total_tip_received")]
         public string? TotalTipReceived { get; set; }
